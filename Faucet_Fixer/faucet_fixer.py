@@ -3,7 +3,7 @@ import parts
 import product_types
 
 # from parts2 import part
-# from product_types import product_type change
+# from product_types import product_type 
 #Class definitions:
 
 class registry:
