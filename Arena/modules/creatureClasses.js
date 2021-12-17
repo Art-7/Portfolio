@@ -33,6 +33,23 @@ class creature {
         }
     }
 
+
+
+    renderNameplate() {
+        return `<li id="${this.name}">${this.name} is a level ${this.level} ${this.species.speciesName} <br> HP: ${this.HP} / ${this.maxHP}</li>`
+    }
+
+    activateListener() {        // the function should be the action that we are executing, with the caster passed in as one param
+        document.getElementById(this.name).addEventListener("click", () => {
+            console.log(`selected ${this.name}`)
+        });
+    }
+
+    removeListener() {
+        document.getElementById(this.name).removeEventListener("click", returnsSelection = () => {
+        });
+    }
+
 }
 
 class species {
@@ -55,11 +72,34 @@ class stats {
 }
 
 class action {
-    constructor(name, type) {
+    constructor(name, type, baseMagnitude, heal=false) {
         this.name = name;
         this.type = type;
+        this.baseMagnitude = baseMagnitude;
+        this.heal = heal;
 
     }
+
+    execute(caster, target) {
+        const magnitude = this.calculateMagnitude(caster);
+        if (this.heal == true) {
+            target.restoreHP(magnitude);
+        } else {
+            target.takeDamage(magnitude);
+        }
+
+
+    }
+
+    calculateMagnitude(caster) {
+        let modMag = 2;
+        return this.baseMagnitude + modMag;
+         
+
+    }
+
+
+
 }
 
-export { creature, species, stats };
+export { creature, species, stats, action };
