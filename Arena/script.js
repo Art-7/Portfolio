@@ -112,7 +112,7 @@ testButtons.innerHTML = damageTestButton1 + healTestButton1 + attackTestButton1
 // button scripting
 document.getElementById('damage').addEventListener("click", () => {
     testcreature1.takeDamage(5);
-    team1_render.innerHTML = `<li>${testcreature1.name} is a level ${testcreature1.level} ${testcreature1.species.speciesName} <br> ${testcreature1.HP} / ${testcreature1.maxHP}</li > `;
+    //team1_render.innerHTML = `<li>${testcreature1.name} is a level ${testcreature1.level} ${testcreature1.species.speciesName} <br> ${testcreature1.HP} / ${testcreature1.maxHP}</li > `;
 
 });
 document.getElementById('actiontest').addEventListener("click", () => {
