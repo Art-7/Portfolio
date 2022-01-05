@@ -40,20 +40,16 @@ class creature {
         return `<li id="${this.name}">${this.name} is a level ${this.level} ${this.species.speciesName} <br> HP: ${this.HP} / ${this.maxHP}</li>`
     }
 
-    activateListener(caster, action, callBack, creature) {        // the function should be the action that we are executing, with the caster passed in as one param
-        document.getElementById(this.name).addEventListener("click", function handler() {
-            //console.log(`selected ${this.name}`)
-            console.log('this is ' + this)
-            this.removeEventListener("click", handler)
-            callBack(caster, action, creature)
-        });
+    activateListener(caster, action, callBack, creature, handler) {        // the function should be the action that we are executing, with the caster passed in as one param
+        console.log(handler)
+        document.getElementById(this.name).addEventListener("click", handler(caster, action, callBack, creature));
     }
 
-    removeListener() {
-        document.getElementById(this.name).removeEventListener("click");
+    removeListener(handler) {
+        document.getElementById(this.name).removeEventListener("click", handler())
     }
 
-    openActionMenu(caster, callBack) {
+    openActionMenu(caster, callBack, handler) {
         console.log(`${this.name} is ready!`)
         let actionMenuHTML = ""
         for (let i = 0; i < this.actionsList.length; i++) {
@@ -63,7 +59,7 @@ class creature {
         actionMenu.innerHTML = actionMenuHTML
         for (let action of this.actionsList) {
             console.log(action);
-            action.activateButton(caster, callBack);
+            action.activateButton(caster, callBack, handler);
         }
 
     }
@@ -119,15 +115,15 @@ class action {
 
     }
       
-    activateButton(caster, callBack) {
+    activateButton(caster, callBack, handler) {
         const action = this
         document.getElementById(this.name).addEventListener("click", () => {
-            callBack(caster, action);
+            callBack(caster, action, handler);
             //this.openTargetting(caster);
         })
   
     }
-
+    // depreciated
     openTargetting = (caster) => {
         console.log(`${caster.name} is using ${this.name}, awaiting target `)
         console.log(this)

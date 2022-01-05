@@ -12,38 +12,48 @@ const openTargetting = (caster, action) => {
     //console.log(caster)
     for (let team of space) {
         for (let creature of team) {
-            creature.activateListener(caster, action, confirmAction, creature);
+            creature.activateListener(caster, action, confirmAction, creature, handler);
         }
     }
 
 };
 
+const handler = (caster, action, callBack, creature) => {
+    return () => {
+        //console.log(`selected ${this.name}`)
+        console.log('this is ' + this)
+        //this.removeEventListener("click", handler)
+        callBack(caster, action, creature)
+    }
+}
 
-
-const closeTargetting = () => {
+const closeTargetting = (handler) => {
     for (let team of space) {
         for (let creature of team) {
-            creature.removeListener();
+            console.log(creature)
+            console.log(handler)
+            creature.removeListener(handler);
         }
     }
 }
 
 const confirmAction = (caster, action, target) => {
     // prompt to verify action, reset take action cycle if not confirmed
-    console.log(caster)
-    console.log(action)
-    console.log(target)
+    //console.log(caster)
+    //console.log(action)
+    //console.log(target)
     // confirmation logic, for now skip to execution
-    //closeTargetting()
+    //closeTargetting(handler)
     caster.closeActionMenu()
     action.execute(caster, target)
-
+    team1_render.innerHTML = renderTeam(team1)
+    team2_render.innerHTML = renderTeam(team2)
 }
 
 const takeAction = (caster, action= null, target= null) => {
     if (state == 'ready') {
         state = 'selecting'
-        actingCreature.openActionMenu(caster, openTargetting)
+        actingCreature.openActionMenu(caster, openTargetting, handler)
         // code to render action list -- !need actions, !creatures need action lists and action buttons need scripting
     } else if (state == 'selecting') {
         //console.log(`${caster.name} is ${action} targetting!`)
