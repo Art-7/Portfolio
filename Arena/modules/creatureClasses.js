@@ -1,3 +1,5 @@
+
+        // class controlling all things regarding creatures: stat management, action usage and targetting logic
 class creature {
     constructor(name, species, actionsList, level = 1, KO = false) {
         this.name = name;
@@ -10,11 +12,11 @@ class creature {
         this.level = level;
         this.actionsList = actionsList;
     }
-
+        // returns MaxHP 
     calculateMaxHP(baseHP, vitality) {
         return baseHP + vitality;
     }
-
+        // applies damage to creature, marks KO if depleted
     takeDamage(damage) {
         if (this.HP - damage <= 0) {
             this.HP = 0;
@@ -25,7 +27,7 @@ class creature {
         }
         document.getElementById(this.name).innerHTML = `${this.name} is a level ${this.level} ${this.species.speciesName} <br> HP: ${this.HP} / ${this.maxHP}`
     }
-
+        // applies healing to creature
     restoreHP(heal) {
         if (this.hp + heal >= this.maxHP) {
             this.HP = this.maxHP;
@@ -35,20 +37,20 @@ class creature {
     }
 
 
-
+        // generates name plate for creature
     renderNameplate() {
         return `<li id="${this.name}">${this.name} is a level ${this.level} ${this.species.speciesName} <br> HP: ${this.HP} / ${this.maxHP}</li>`
     }
-
-    activateListener(caster, action, callBack, creature, handler) {        // the function should be the action that we are executing, with the caster passed in as one param
+        // activates listener for nameplate, sets up execution logic when targetted by action
+    activateListener(caster, action, callBack, creature, handler) {        
         console.log(handler)
         document.getElementById(this.name).addEventListener("click", handler(caster, action, callBack, creature));
     }
-
+        // supposed to remove the listener, not used currently, now just regenerating creature nameplates
     removeListener(handler) {
         document.getElementById(this.name).removeEventListener("click", handler())
     }
-
+        // opens the action Menu for creatures when it is their turn to act
     openActionMenu(caster, callBack, handler) {
         console.log(`${this.name} is ready!`)
         let actionMenuHTML = ""
@@ -63,12 +65,12 @@ class creature {
         }
 
     }
-
+        // closes action menu when done with action sequence
     closeActionMenu() {
         actionMenu.innerHTML = ""
     }
 }
-
+        //class used to control species which determine basic creature traits
 class species {
     constructor(speciesName, baseHP, baseAP, type, baseStr, baseDex, baseMag, baseVit) {
         this.speciesName = speciesName
@@ -78,7 +80,7 @@ class species {
         this.baseStats = new stats(baseStr, baseDex, baseMag, baseVit);
     }
 }
-
+        //class used to hold main stats of creatures
 class stats {
     constructor(str, dex, mag, vit) {
         this.str = str;
@@ -87,7 +89,7 @@ class stats {
         this.vit = vit;
     }
 }
-
+        //Class governing actions and methods used to build Action menu and execute actions
 class action {
     constructor(name, type, baseMagnitude, heal=false) {
         this.name = name;
@@ -96,7 +98,7 @@ class action {
         this.heal = heal;
 
     }
-
+            // carries out action against target
     execute(caster, target) {
         const magnitude = this.calculateMagnitude(caster);
         if (this.heal == true) {
@@ -107,14 +109,14 @@ class action {
 
 
     }
-
+            // Calculates strength of action
     calculateMagnitude(caster) {
         let modMag = 2;
         return this.baseMagnitude + modMag;
          
 
     }
-      
+            //Attaches handlers to each button, callBack is openTargetting function, which carries caster, and passes handler to each possible target
     activateButton(caster, callBack, handler) {
         const action = this
         document.getElementById(this.name).addEventListener("click", () => {
@@ -123,18 +125,8 @@ class action {
         })
   
     }
-    // depreciated
-    openTargetting = (caster) => {
-        console.log(`${caster.name} is using ${this.name}, awaiting target `)
-        console.log(this)
-        for (let team of space) {
-            for (let creature of team) {
-                creature.activateListener(caster);
-            }
-        }
 
-    }
-
+        //creates button for action in Menu
     renderButton() {
         return `<button id="${this.name}">${this.name}</button>`
     }
