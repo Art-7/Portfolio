@@ -11,7 +11,10 @@ class creature {
         this.HP = this.maxHP;
         this.level = level;
         this.actionsList = actionsList;
+        this.actionTimer = 0;
     }
+
+    //Methods used for managing HP
         // returns MaxHP 
     calculateMaxHP(baseHP, vitality) {
         return baseHP + vitality;
@@ -21,6 +24,7 @@ class creature {
         if (this.HP - damage <= 0) {
             this.HP = 0;
             this.KO = true;
+            this.actionTimer = 0;
         } else {
             this.HP -= damage;
 
@@ -36,10 +40,26 @@ class creature {
         }
     }
 
+    //Methods used to handle actionTimer
+        //increments action timer
+    incrementActionTimer() {
+        if (this.KO == false) {
+            this.actionTimer += 1 + this.coreStats.dex;
+            if (this.actionTimer >= 50) {
+                this.actionTimer = 50;
+            }
+        }
 
+    }
+
+    resetActionTimer() {
+        this.actionTimer = 0;
+    }
+
+    // Methods used for interface control
         // generates name plate for creature
     renderNameplate() {
-        return `<li id="${this.name}">${this.name} is a level ${this.level} ${this.species.speciesName} <br> HP: ${this.HP} / ${this.maxHP}</li>`
+        return `<li id="${this.name}">${this.name} is a level ${this.level} ${this.species.speciesName} <br> HP: ${this.HP} / ${this.maxHP} actionTimer: ${this.actionTimer}/50</li>`
     }
         // activates listener for nameplate, sets up execution logic when targetted by action
     activateListener(caster, action, callBack, creature, handler) {        

@@ -3,8 +3,21 @@ import * as creatures  from "./modules/creatureClasses.js";
 let team1 = [];
 let team2 = [];
 let space = [team1, team2]
+let readyCreatures = []
 
 
+const checkVictory = () => {
+    const checkKO = (creature) => {
+        return creature.KO
+    }
+
+    if (team1.every(checkKO)) {
+        console.log('Team 2 has won!')
+    }
+    if (team2.every(checkKO)) {
+        console.log('Team 1 has won!')
+    }
+}
 
         // used to apply targetting listeners to each creature
 const openTargetting = (caster, action) => {
@@ -33,7 +46,17 @@ const confirmAction = (caster, action, target) => {
     // confirmation logic, for now skip to execution
     caster.closeActionMenu()
     action.execute(caster, target)
+    caster.resetActionTimer()
     renderInterface()
+    checkVictory()
+    checkReadyCreatures()    
+}
+
+// checks for any Creatures awaiting action
+const checkReadyCreatures = () => {
+    if (readyCreatures.length > 0) {
+        takeAction(readyCreatures.pop())
+    }
 }
 
         //starts action sequence by opening Action menu for caster, will likely get phased out later once turn control is in place
@@ -41,6 +64,15 @@ const takeAction = (caster, action= null, target= null) => {
         caster.openActionMenu(caster, openTargetting, handler)
         }
 
+const renderTeam = (team) => {
+    let teamHTML = ""
+    //console.log(teamHTML)
+    for (let i = 0; i < team.length; i++) {
+        teamHTML += team[i].renderNameplate();
+        //console.log(teamHTML)
+    }
+    return teamHTML
+}
 
 // instantiate test actions
 let attackTest = new creatures.action('attack', null, 2);
@@ -50,7 +82,7 @@ console.log(healTest)
 
 //instantiate test species
 let physicalspecies = new creatures.species('physicalTest', 15, 1, null, 15, 10, 5, 10);
-let magicalspecies = new creatures.species('magicalTest', 8, 1, null, 5, 10, 15, 10);
+let magicalspecies = new creatures.species('magicalTest', 8, 1, null, 5, 8, 15, 10);
 
 //instantiate test creatures
 let testcreature1 = new creatures.creature('test1', physicalspecies, [attackTest, healTest], 1);
@@ -75,42 +107,51 @@ const testButtons = document.getElementById("testButtons");
 const actionMenu = document.getElementById("actionMenu");       // might use this later
 
 // render function for teams and creature name plates
-const renderTeam = (team) => {
-    let teamHTML = ""
-    console.log(teamHTML)
-    for (let i = 0; i < team.length; i++) {
-        teamHTML += team[i].renderNameplate();
-        console.log(teamHTML)
-    }
-    return teamHTML
-}
+
 
 // render teams and buttons 
 const renderInterface = () => {
     team1_render.innerHTML = renderTeam(team1)
     team2_render.innerHTML = renderTeam(team2)
-    testButtons.innerHTML = damageTestButton1 + healTestButton1 + attackTestButton1
 }
+
+
 
 
 // Execution section
 
 renderInterface()
 
-// button scripting  for test buttons
+// rendering and  button scripting  for test buttons
+testButtons.innerHTML = damageTestButton1 + healTestButton1 + attackTestButton1
+
 document.getElementById('damage').addEventListener("click", () => {
     testcreature1.takeDamage(5);
     //team1_render.innerHTML = `<li>${testcreature1.name} is a level ${testcreature1.level} ${testcreature1.species.speciesName} <br> ${testcreature1.HP} / ${testcreature1.maxHP}</li > `;
 
 });
 document.getElementById('actiontest').addEventListener("click", () => {
-    let target
-    openTargetting()
 
+    for (let team of space) {
+        for (let creature of team) {
+            creature.incrementActionTimer()
+            if (creature.actionTimer == 50) {
+                readyCreatures.push(creature)
+
+            }
+        }
+    }
+    renderInterface()
+    checkReadyCreatures();
+    //Will need a break here when this becomes a while loop
 });
 
-console.log(testcreature1)
+
+const tick = () => {
+
+}
+//console.log(testcreature1)
 let actingCreature = testcreature1;
 let state = 'ready';
-takeAction(actingCreature);
+//takeAction(actingCreature);
 //actingCreature.openActionMenu();
