@@ -56,6 +56,8 @@ const confirmAction = (caster, action, target) => {
 const checkReadyCreatures = () => {
     if (readyCreatures.length > 0) {
         takeAction(readyCreatures.pop())
+    } else {
+        tick()
     }
 }
 
@@ -116,7 +118,32 @@ const renderInterface = () => {
 }
 
 
+const tick = () => {
+    console.log("tick")
+    let id = setInterval(increment, 1000)
 
+    function  increment() {
+        if (readyCreatures.length > 0) {
+            console.log('at clear')
+            clearInterval(id)
+            checkReadyCreatures()
+        } else {
+            console.log('incrementing timers')
+            for (let team of space) {
+                for (let creature of team) {
+                    creature.incrementActionTimer()
+                    if (creature.actionTimer == 50) {
+                        readyCreatures.push(creature)
+
+                    }
+                }
+            }
+        }
+        
+        renderInterface()
+    }
+
+}
 
 // Execution section
 
@@ -125,11 +152,7 @@ renderInterface()
 // rendering and  button scripting  for test buttons
 testButtons.innerHTML = damageTestButton1 + healTestButton1 + attackTestButton1
 
-document.getElementById('damage').addEventListener("click", () => {
-    testcreature1.takeDamage(5);
-    //team1_render.innerHTML = `<li>${testcreature1.name} is a level ${testcreature1.level} ${testcreature1.species.speciesName} <br> ${testcreature1.HP} / ${testcreature1.maxHP}</li > `;
-
-});
+document.getElementById('damage').addEventListener("click", tick());
 document.getElementById('actiontest').addEventListener("click", () => {
 
     for (let team of space) {
@@ -147,9 +170,8 @@ document.getElementById('actiontest').addEventListener("click", () => {
 });
 
 
-const tick = () => {
 
-}
+
 //console.log(testcreature1)
 let actingCreature = testcreature1;
 let state = 'ready';
