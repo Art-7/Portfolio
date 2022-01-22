@@ -13,10 +13,16 @@ const checkVictory = () => {
 
     if (team1.every(checkKO)) {
         console.log('Team 2 has won!')
+        updateBanner('Game over <br> Team 2 Wins!')
+        return true
     }
     if (team2.every(checkKO)) {
         console.log('Team 1 has won!')
+        updateBanner('Game over <br> Team 1 Wins!')
+        return true
     }
+    return false
+    
 }
 
         // used to apply targetting listeners to each creature
@@ -48,8 +54,12 @@ const confirmAction = (caster, action, target) => {
     action.execute(caster, target)
     caster.resetActionTimer()
     renderInterface()
-    checkVictory()
-    checkReadyCreatures()    
+    if (checkVictory()) {
+        //end game
+    } else {
+        checkReadyCreatures()
+    }
+   
 }
 
 // checks for any Creatures awaiting action
@@ -106,6 +116,7 @@ team2.push(testcreature3);
 const team1_render = document.getElementById("team1_list");
 const team2_render = document.getElementById("team2_list");
 const testButtons = document.getElementById("testButtons");
+const announcementBanner = document.getElementById("announcementBanner")
 const actionMenu = document.getElementById("actionMenu");       // might use this later
 
 // render function for teams and creature name plates
@@ -117,7 +128,7 @@ const renderInterface = () => {
     team2_render.innerHTML = renderTeam(team2)
 }
 
-
+// increment timers and cycle to check for ready creatures
 const tick = () => {
     console.log("tick")
     let id = setInterval(increment, 1000)
@@ -145,6 +156,10 @@ const tick = () => {
 
 }
 
+
+const updateBanner = (bannerText) => {
+    announcementBanner.innerHTML = `${bannerText}`
+}
 // Execution section
 
 renderInterface()
@@ -154,18 +169,7 @@ testButtons.innerHTML = damageTestButton1 + healTestButton1 + attackTestButton1
 
 document.getElementById('damage').addEventListener("click", tick());
 document.getElementById('actiontest').addEventListener("click", () => {
-
-    for (let team of space) {
-        for (let creature of team) {
-            creature.incrementActionTimer()
-            if (creature.actionTimer == 50) {
-                readyCreatures.push(creature)
-
-            }
-        }
-    }
-    renderInterface()
-    checkReadyCreatures();
+    updateBanner('banner updated')
     //Will need a break here when this becomes a while loop
 });
 

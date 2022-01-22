@@ -131,7 +131,7 @@ class action {
     }
             // Calculates strength of action
     calculateMagnitude(caster) {
-        let modMag = 2;
+        let modMag = 10;
         return this.baseMagnitude + modMag;
          
 
