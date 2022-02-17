@@ -1,0 +1,104 @@
+
+body {
+    color: grey;
+    background-color: black;
+}
+
+
+button {
+    font-weight: bold;
+    font-size: xx-large;
+    border-radius: 4px;
+    font-family: 'Exo 2';
+    margin: 7px
+}
+
+
+
+.teamBox {
+    width: fit-content;
+    display: inline-block;
+    height: inherit;
+}
+
+.teamList {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+}
+
+.namePlate {
+    padding: 10px;
+    font-family: 'Cinzel Decorative';
+    font-weight: normal;
+    border-bottom: groove;
+    border-top: groove;
+}
+
+#mainScreen {
+    height: fit-content;
+    position: relative;
+    background-image: url("assets/tempbackround.jpg");
+    background-repeat: no-repeat;
+    background-position-x: center;
+    height: 500px;
+    margin: auto;
+    width: 100%;
+}
+
+#battlefield {
+    position: relative;
+    border:solid;
+    margin: auto;
+    width: 60%;
+    height: 500px;
+    display: block;
+}
+
+.menuBox {
+    color: white;
+    background: royalblue;
+    border: solid;
+    border-radius: 6px;
+    width: fit-content;
+    display: inline-block;
+    background-image: linear-gradient(45deg, black, transparent);
+}
+
+.option {
+    background-image: linear-gradient(to right, transparent, rgba(175,175,0,.5));
+
+}
+
+.option:hover {
+    background-image: linear-gradient(to right, transparent, rgba(175,175,0,1));
+}
+
+.selected {
+    background-image: linear-gradient(to left, transparent, rgba(175,175,0,1));
+    border:solid;
+}
+
+#announcementBanner {
+    position: static;
+    margin: auto;
+    width: 50%;
+    display: block;
+    text-align: center;
+}
+
+#team1 {
+    position: absolute;
+    left: 0px;
+}
+
+#team2 {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+#actionMenu {
+    margin: auto;
+    width: 100%;
+}

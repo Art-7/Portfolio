@@ -5,6 +5,8 @@ let team2 = [];
 let space = [team1, team2]
 let readyCreatures = []
 
+const canvas = document.getElementById("battlefield");
+const ctx = canvas.getContext("2d");
 
 const checkVictory = () => {
     const checkKO = (creature) => {
@@ -41,6 +43,7 @@ const handler = (caster, action, callBack, creature) => {
     return () => {
         //console.log(`selected ${this.name}`)
         console.log('this is ' + this)
+        document.getElementById(creature.name).classList.add("selected")
         //this.removeEventListener("click", handler)
         callBack(caster, action, creature)
     }
@@ -97,19 +100,29 @@ let physicalspecies = new creatures.species('physicalTest', 15, 1, null, 15, 10,
 let magicalspecies = new creatures.species('magicalTest', 8, 1, null, 5, 8, 15, 10);
 
 //instantiate test creatures
-let testcreature1 = new creatures.creature('test1', physicalspecies, [attackTest, healTest], 1);
-let testcreature2 = new creatures.creature('test2', magicalspecies, [attackTest, healTest], 1);
-let testcreature3 = new creatures.creature('test3', magicalspecies, [attackTest, healTest], 1);
+let testcreature1a = new creatures.creature('test1a', physicalspecies, [attackTest, healTest], 1);
+let testcreature1b = new creatures.creature('test1b', magicalspecies, [attackTest, healTest], 1);
+let testcreature1c = new creatures.creature('test1c', magicalspecies, [attackTest, healTest], 1);
+
+let testcreature2a = new creatures.creature('test2a', magicalspecies, [attackTest, healTest], 1);
+let testcreature2b = new creatures.creature('test2b', physicalspecies, [attackTest, healTest], 1);
+let testcreature2c = new creatures.creature('test2c', physicalspecies, [attackTest, healTest], 1);
+
 
 //instantiate test buttons- as if it is test creature1's turn
-let damageTestButton1 = `<button id="damage" > Damage ${testcreature1.name}</button>`;
-let healTestButton1 = `<button> Heal ${testcreature1.name}</button>`;
-let attackTestButton1 = `<button id="actiontest"> ${testcreature1.name} action</button>`
+let damageTestButton1 = `<button id="damage" > Damage ${testcreature1a.name}</button>`;
+let healTestButton1 = `<button> Heal ${testcreature1a.name}</button>`;
+let attackTestButton1 = `<button id="actiontest"> ${testcreature1a.name} action</button>`
 
 //set up teams
-team1.push(testcreature1);
-team2.push(testcreature2);
-team2.push(testcreature3);
+team1.push(testcreature1a);
+team1.push(testcreature1b);
+team1.push(testcreature1c);
+
+team2.push(testcreature2a);
+team2.push(testcreature2b);
+team2.push(testcreature2c);
+
 
 //likely to cut some of these, get team lists and buttons linked to HTML
 
@@ -170,14 +183,17 @@ testButtons.innerHTML = damageTestButton1 + healTestButton1 + attackTestButton1
 document.getElementById('damage').addEventListener("click", tick());
 document.getElementById('actiontest').addEventListener("click", () => {
     updateBanner('banner updated')
+    let grab = document.getElementById("test1a")
+    grab.classList.add("option")
+    console.log(grab)
     //Will need a break here when this becomes a while loop
 });
 
 
 
 
-//console.log(testcreature1)
-let actingCreature = testcreature1;
+//console.log(testcreature1a)
+let actingCreature = testcreature1a;
 let state = 'ready';
 //takeAction(actingCreature);
 //actingCreature.openActionMenu();

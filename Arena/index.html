@@ -5,36 +5,52 @@
     <!--  <script type="module" src="http://127.0.0.1:8080/modules/creatureClasses.js"></script> -->
 
     <script type="module" src="http://127.0.0.1:8080/script.js"></script>
-
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:ital,wght@0,100;0,300;0,400;1,700&display=swap" rel="stylesheet">
 </head>
-    <body>
+<body>
 
-        <h1>Beast Battler</h1>
-        <h2>Menu</h2>
-        <ul>
-            <li>Battle</li>
-            <li>Reset</li>
-        </ul>
-        <div id="announcementBanner">
+    <h1>Beast Battler</h1>
+    <!-- <h2>Menu</h2>
+     <ul>
+         <li>Battle</li>
+         <li>Reset</li>
+     </ul>--->
+    <!---  <div id="announcementBanner" class="menuBox">
+     </div>-->
+    <div id="mainScreen">
 
-        </div>
-        <div id="team1">
+        <div id="team1" class="menuBox teamBox">
             <h3>Team 1</h3>
-            <ol id="team1_list">
-            </ol>
+            <ul id="team1_list" class="teamList">
+            </ul>
         </div>
-        <div id="team2">
+        <!--- <img src="assets/tempbackround.jpg" /> -->
+        <div id="centerSection">
+            <div id="announcementBanner" class="menuBox">
+            </div>
+            <div id="renderSection" >
+            <canvas id="battlefield" >
+
+            </canvas>
+            </div>
+        </div>
+        <div id="team2" class="menuBox teamBox">
             <h3>Team 2</h3>
-            <ol id="team2_list">
-            </ol>
+            <ul id="team2_list" class="teamList">
+            </ul>
         </div>
-        <div id="actionMenu">
+    </div>
 
-        </div>
-        <div id="testButtons">
-        </div>
+    <div id="actionMenu" class="menuBox">
 
-    </body>
+    </div>
+    <div id="testButtons">
+    </div>
+
+</body>
 
 </html>
 

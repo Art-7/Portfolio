@@ -59,11 +59,12 @@ class creature {
     // Methods used for interface control
         // generates name plate for creature
     renderNameplate() {
-        return `<li id="${this.name}">${this.name} is a level ${this.level} ${this.species.speciesName} <br> HP: ${this.HP} / ${this.maxHP} actionTimer: ${this.actionTimer}/50</li>`
+        return `<li id="${this.name}" class="namePlate">${this.name} is a level ${this.level} ${this.species.speciesName} <br> HP: ${this.HP} / ${this.maxHP} actionTimer: ${this.actionTimer}/50</li>`
     }
         // activates listener for nameplate, sets up execution logic when targetted by action
     activateListener(caster, action, callBack, creature, handler) {        
         console.log(handler)
+        document.getElementById(this.name).classList.add("option")
         document.getElementById(this.name).addEventListener("click", handler(caster, action, callBack, creature));
     }
         // supposed to remove the listener, not used currently, now just regenerating creature nameplates
