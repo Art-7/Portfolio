@@ -7,6 +7,40 @@ let readyCreatures = []
 
 const canvas = document.getElementById("battlefield");
 const ctx = canvas.getContext("2d");
+const spriteSheet = new Image()
+spriteSheet.src = 'assets/rpgcritters2.png'
+const background = new Image()
+background.src = 'assets/backgrounds/battleback_arena.png'
+
+const sprites = {
+    spider: {
+        sx: 15,
+        sy: 12,
+        sw: 33,
+        sh: 30
+    },
+
+    //draw: function (sprite, draw_x, draw_y) {
+    //    ctx.drawImage(spriteSheet, sprites.sprite.sx, sprites.sprite.sy, sprites.sprite.sw, sprites.sprite.sh, draw_x, draw_y, 33, 30)
+   // }
+}
+const drawSprite = (sprite, draw_x, draw_y) => {
+    const target = sprite
+    ctx.drawImage(spriteSheet, sprites[sprite].sx, sprites[sprite].sy, sprites[sprite].sw, sprites[sprite].sh, draw_x, draw_y, 33, 30)
+}
+
+
+const renderFrame = () => {
+    //const background = new Image()
+    //background.src = 'assets/backgrounds/battleback_arena.png'
+    ctx.drawImage(background, 0, 0, 300, 150)
+    drawSprite('spider',50, 10)
+    //sprites.draw(sprites.spider, 50, 10)
+    //ctx.drawImage(spriteSheet, sprites.spider.sx, sprites.spider.sy, sprites.spider.sw, sprites.spider.sh, 10,10, 33, 30)
+}
+
+//ctx.fillStyle = 'rgb(200, 0, 0)'
+//ctx.fillRect(10,10,50,50)
 
 const checkVictory = () => {
     const checkKO = (creature) => {
@@ -186,6 +220,8 @@ document.getElementById('actiontest').addEventListener("click", () => {
     let grab = document.getElementById("test1a")
     grab.classList.add("option")
     console.log(grab)
+    renderFrame()
+    //ctx.drawImage(spriteSheet,50, 50)
     //Will need a break here when this becomes a while loop
 });
 
