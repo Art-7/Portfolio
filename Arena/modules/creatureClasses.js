@@ -7,6 +7,7 @@ class creature {
         this.species = species;
         this.speciesName = this.species.speciesName;
         this.coreStats = this.species.baseStats;
+        this.sprite = this.species.sprite;
         this.maxHP = this.calculateMaxHP(species.baseHP, this.coreStats.vit);
         this.HP = this.maxHP;
         this.level = level;
@@ -93,12 +94,13 @@ class creature {
 }
         //class used to control species which determine basic creature traits
 class species {
-    constructor(speciesName, baseHP, baseAP, type, baseStr, baseDex, baseMag, baseVit) {
+    constructor(speciesName, baseHP, baseAP, type, baseStr, baseDex, baseMag, baseVit, sprite) {
         this.speciesName = speciesName
         this.baseHP = baseHP;
         this.baseAP = baseAP;
         this.type = type;
         this.baseStats = new stats(baseStr, baseDex, baseMag, baseVit);
+        this.sprite = sprite;
     }
 }
         //class used to hold main stats of creatures

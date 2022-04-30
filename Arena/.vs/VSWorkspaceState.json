@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\assets",
+    "\\assets\\backgrounds",
     "\\modules"
   ],
-  "SelectedNode": "\\styles.css",
+  "SelectedNode": "\\script.js",
   "PreviewInSolutionExplorer": false
 }
